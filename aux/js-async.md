@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/29200981/node-js-how-to-perform-endless-loop-with-async-module

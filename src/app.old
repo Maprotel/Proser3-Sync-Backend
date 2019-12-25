@@ -1,0 +1,45 @@
+
+const mariadb = require('mariadb');
+
+const poolRemote = mariadb.createPool({
+  host: '172.20.0.234',
+  user: 'maprotel',
+  password: 'M4pr0t3l',
+  connectionLimit: 5,
+  metadata: false
+});
+
+
+const poolLocal = mariadb.createPool({
+  host: 'localhost',
+  user: 'maprotel',
+  password: 'M4pr0t3l',
+  connectionLimit: 5
+});
+
+async function asyncFunction() {
+  let connRemote;
+  let connLocal;
+
+  try {
+    connRemote = await poolRemote.getConnection();
+    connLocal = await poolLocal.getConnection();
+
+    const rows = await connRemote.query("SELECT * from call_center.audit limit 5");
+    console.log(rows); //[ {val: 1}, meta: ... ]
+
+    //result = rows
+
+    // 	const res = await connLocal.query("INSERT INTO myTable value (?, ?)", [1, "mariadb"]);
+    //  	console.log(res); // { affectedRows: 1, insertId: 1, warningStatus: 0 }
+
+  } catch (err) {
+    throw err;
+  } finally {
+    if (connRemote) return poolRemote.end();
+    if (connLocal) return poolLocal.end();
+  }
+}
+
+
+asyncFunction()

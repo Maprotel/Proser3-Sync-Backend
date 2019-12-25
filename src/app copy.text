@@ -1,0 +1,25 @@
+async function main() {
+  // get the client
+  // const mariadb = require('mariadb');
+  // create the connection
+  const connection = await mysql.createConnection({ host: 'localhost', user: 'sammy', 'password': '10691069a$', database: 'proser-rep-proser_base' });
+
+
+  const external = await mysql.createConnection({ host: '172.20.0.234', user: 'maprotel', 'password': 'M4pr0t3l', database: 'call_center' });
+  // query database
+  // const [rows, fields] = await connection.execute('SELECT * FROM  MainAudit');
+
+  const temp = await connection.query('SELECT * FROM  MainAudit where audit_id = 78');
+  // console.log('temp', temp[0]);
+
+  const remote = await external
+    .query('SELECT * FROM  audit limit 10');
+  console.log('res', (res));
+
+}
+
+
+
+
+
+main();
